@@ -24,6 +24,12 @@ public enum Type
 
 public class Grow : MonoBehaviour 
 {
+	public Color originColor;
+	public Color temColor;
+	public Color endColor;
+	public Color warnColor;
+
+
 	public GameObject applePrefab;
 	public Transform bornPos;
 	public GameObject guidPrefab;
@@ -183,9 +189,14 @@ public class Grow : MonoBehaviour
 							Vector2 randomDir;
 							switch (dir)
 							{
-								
 								case Direction.North:
-									randomDir = new Vector2(Random.Range(-1f, 1f), Random.Range(0.5f, 1f));
+									if (Input.acceleration.x > 0.1f)
+										randomDir = new Vector2(Random.Range(-1f, 0.2f), Random.Range(0.5f, 1f));
+									else if(Input.acceleration.x<-0.1f)
+										randomDir = new Vector2(Random.Range(-0.2f, 1f), Random.Range(0.5f, 1f));
+									else
+										randomDir = new Vector2(Random.Range(-1f, 1f), Random.Range(0.5f, 1f));
+									
 									break;
 								case Direction.South:
 									randomDir = new Vector2(Random.Range(-1f, 1f), -Random.Range(0.5f, 1f));
@@ -194,7 +205,6 @@ public class Grow : MonoBehaviour
 									randomDir = new Vector2(Random.Range(-1f, 1f), Random.Range(0.5f, 1f));
 									break;
 							}
-
 							GameObject go = Instantiate(prefab);
 							go.transform.position = rebornPos;
 							go.transform.Rotate(new Vector3(0, 0, 180f*Mathf.Atan(randomDir.x / randomDir.y)/Mathf.PI));
@@ -255,6 +265,7 @@ public class Grow : MonoBehaviour
 		Pause(false);
 		isReachTop = false;
 
+		ChangeBackground.instance.GenerateBackground();
 	}
 	public void Continue()
 	{
