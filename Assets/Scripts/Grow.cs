@@ -113,6 +113,7 @@ public class Grow : MonoBehaviour
 
 			root.transform.SetParent(rootParentList[rootCount]);
 			Branch rootBranch = new Branch(root);
+
 			List<Branch> rootList = new List<Branch>();
 
 			rootList.Add(rootBranch);
@@ -157,7 +158,7 @@ public class Grow : MonoBehaviour
 			{
 				if (item.Value[i]!=null)
 				{
-					if (item.Value[i].canGrow)
+					if (item.Value[i].canGrow && item.Value[i].gameObject.GetComponent<BranchController>().canGrow)
 					{
 						Vector3 origin = item.Value[i].gameObject.transform.localScale;
 						item.Value[i].gameObject.transform.localScale += new Vector3(0, growSpeed * Time.deltaTime, 0);
@@ -169,7 +170,7 @@ public class Grow : MonoBehaviour
 						item.Value[i].gameObject.transform.localScale += new Vector3(origin.x * strongSpeed * Time.deltaTime, 0, 0);	
 					}
 
-					if (item.Value[i].growTime >= seperateTime && item.Value[i].canSeparate)
+					if (item.Value[i].growTime >= seperateTime && item.Value[i].canSeparate && item.Value[i].gameObject.GetComponent<BranchController>().canSeparate)
 					{
 						float angle = Mathf.Atan(item.Value[i].direction.y / item.Value[i].direction.x);
 						float length = item.Value[i].gameObject.transform.localScale.y;

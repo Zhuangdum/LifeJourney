@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class BranchController : MonoBehaviour 
 {
-	void OnCollisionEnter2D(Collision2D coll)
+	[HideInInspector]
+	public bool canSeparate = true;
+	[HideInInspector]
+	public bool canGrow = true;
+
+	void OnTriggerStay2D(Collider2D coll)
 	{
 		if (coll.gameObject.tag == "Block")
 		{
-//			coll.gameObject.SendMessage();
 			HideSelf();
 		}
 	}
@@ -19,9 +23,9 @@ public class BranchController : MonoBehaviour
 	}
 	void HideSelf()
 	{
+		canSeparate = false;
+		canGrow = false;
 		this.gameObject.SetActive(false);
-		Debug.Log("hit block");
-
 	}
 
 }
